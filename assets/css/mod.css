@@ -1,0 +1,24 @@
+body {
+  font-family: 'Black Ops One', cursive;
+}
+
+.hero.is-danger {
+  background: linear-gradient(to top right, #524ad0 10%, #D099FA);
+  }
+
+#Q, #W, #E, #A, #S, #D, #Z, #X, #C {
+  display:none;
+}
+
+.button {
+  min-width: 4rem;
+}
+
+.my-footer {
+  background-color: rgb(240, 240, 240);
+}
+
+.calc-num
+{
+margin-left: 1rem;
+}
