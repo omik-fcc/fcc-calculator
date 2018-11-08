@@ -1,43 +1,58 @@
 $("document").ready(function () {
-
-    $(".calc-prop").on("click", inputCalc);
+    $(".calc-prop").on("click", numbers);
     $("#clear").on("click", resetCalc);
-    
+    $(".calc-op").on("click", operators);
+    $(".calc-result").on("click", calcOps);
+    $("#decimal").on("click", handleDecimals);
 });
 
-/* Variable Init */
 let result = "";
-let input = "";
+let newBlock = true;
 
-function inputCalc(k) {
-
-    var button = k.target.innerHTML;
-
-    if (button != "=") {
-        if (button === "." && input.endsWith(".")) {
-            /* PASS */
-        } else if (button === "0" && input.startsWith("0")) {
-            /* PASS */
-        } else {
-            input += button;
-            if (input.startsWith("00")) input = "0";
-            console.log(input)
-            $("#display").text(input)
-        }
+function numbers(k) {
+    var button = k.target.innerHTML; 
+    if (button === "0" && result.startsWith("0")) {     
+        /* PASS */
     } else {
-        calcOps();
+        result += button;
+        $("#display").text(result);
     }
+}
+
+function handleDecimals(k) {
+    var button = k.target.innerHTML;
+    if (newBlock) {
+        if (result.endsWith(".")) {
+            result = result.slice(0, -1) + button;
+            $("#display").text(result);
+        } else {
+            result = result + button;
+            $("#display").text(result);
+        }
+        newBlock = false;
+    }        
+}
+
+function operators(k) {
+    var button = k.target.innerHTML;
+    newBlock = true;
+    if (result.endsWith("+") || result.endsWith("-") || result.endsWith("*") || result.endsWith("/")) {
+        result = result.slice(0, -1) + button;
+    } else {
+        result = result + button;
+    }
+    $("#display").text(result);
+}
+
+function calcOps() {
+    console.log(eval(result));
+    $("#display").text(eval(result));
+    result = (eval(result)).toString();
 }
 
 function resetCalc() {
     result = "";
-    input = "";
+    operator = "";
+    newBlock = true;
     $("#display").text("0")
-}
-
-function calcOps() {
-    result = eval(input);
-    input = result;
-    console.log(result);
-    $("#display").text(result);
 }
